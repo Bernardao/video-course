@@ -1,1 +1,3 @@
-<template>Hello World</template>
+<template>
+  <div>Index de pages</div>
+</template>
