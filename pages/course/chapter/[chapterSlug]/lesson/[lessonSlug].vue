@@ -2,7 +2,7 @@
 const course = useCourse()
 const route = useRoute()
 
-console.log(route.params.chapterSlug, route.params.lessonSlug, course)
+// console.log(route.params.chapterSlug, route.params.lessonSlug, course)
 const chapter = computed(() => {
   return course.chapters.find(
     (chapter) => chapter.slug === route.params.chapterSlug
@@ -21,21 +21,22 @@ const lesson = computed(() => {
     </p>
     <h2 class="my-0">{{ lesson.title }}</h2>
     <div class="flex space-x-4 mt-2 mb-8">
-      <a
+      <NuxtLink
         v-if="lesson.sourceUrl"
-        :href="lesson.sourceUrl"
+        :to="lesson.sourceUrl"
         class="font-normal text-md text-gray-500"
       >
         Download Source Code
-      </a>
-      <a
+      </NuxtLink>
+      <NuxtLink
         v-if="lesson.downloadUrl"
-        :href="lesson.downloadUrl"
+        :to="lesson.downloadUrl"
         class="font-normal text-md text-gray-500"
       >
-        Download Video</a
-      >
+        Download Video
+      </NuxtLink>
     </div>
+    <VideoPlayer v-if="lesson.videoId" :videoId="lesson.videoId" />
     <p>{{ lesson.text }}</p>
   </article>
 </template>
