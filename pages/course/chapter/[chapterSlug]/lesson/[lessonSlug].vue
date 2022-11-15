@@ -2,7 +2,6 @@
 const course = useCourse()
 const route = useRoute()
 
-// console.log(route.params.chapterSlug, route.params.lessonSlug, course)
 const chapter = computed(() => {
   return course.chapters.find(
     (chapter) => chapter.slug === route.params.chapterSlug
@@ -13,6 +12,35 @@ const lesson = computed(() => {
     (lesson) => lesson.slug === route.params.lessonSlug
   )
 })
+
+const title = computed(() => {
+  return `MasteringNuxt: ${lesson.value.title} - ${course.title}`
+})
+useHead({
+  title,
+})
+const progress = useLocalStorage('progress', [])
+
+const isLessonComplete = computed((): boolean => {
+  if (!progress.value[chapter.value.number - 1]) {
+    return false
+  }
+
+  if (!progress.value[chapter.value.number - 1][lesson.value.number - 1]) {
+    return false
+  }
+
+  return progress.value[chapter.value.number - 1][lesson.value.number - 1]
+})
+
+const toggleComplete = () => {
+  if (!progress.value[chapter.value.number - 1]) {
+    progress.value[chapter.value.number - 1] = []
+  }
+
+  progress.value[chapter.value.number - 1][lesson.value.number - 1] =
+    !isLessonComplete.value
+}
 </script>
 <template>
   <article class="lessons">
@@ -38,6 +66,12 @@ const lesson = computed(() => {
     </div>
     <VideoPlayer v-if="lesson.videoId" :videoId="lesson.videoId" />
     <p>{{ lesson.text }}</p>
+    <ClientOnly>
+      <LessonCompleteButton
+        :model-value="isLessonComplete"
+        @update:model-value="toggleComplete"
+      />
+    </ClientOnly>
   </article>
 </template>
 
