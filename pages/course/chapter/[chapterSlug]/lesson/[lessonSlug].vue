@@ -7,13 +7,14 @@ const chapter = computed(() => {
     (chapter) => chapter.slug === route.params.chapterSlug
   )
 })
+
 const lesson = computed(() => {
   return chapter.value.lessons.find(
     (lesson) => lesson.slug === route.params.lessonSlug
   )
 })
 
-const title = computed(() => {
+const title = computed((): string => {
   return `MasteringNuxt: ${lesson.value.title} - ${course.title}`
 })
 useHead({
