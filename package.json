@@ -8,9 +8,10 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@unocss/nuxt": "^0.46.3",
-    "@vueuse/core": "^9.4.0",
-    "@vueuse/nuxt": "^9.4.0",
-    "nuxt": "3.0.0-rc.12"
+    "@unocss/nuxt": "^0.46.5",
+    "@vueuse/core": "^9.5.0",
+    "@vueuse/nuxt": "^9.5.0",
+    "nuxt": "3.0.0",
+    "nuxt-typed-router": "^1.2.3"
   }
 }

@@ -1,5 +1,12 @@
 <script lang="ts" setup>
 const { chapters } = useCourse()
+const resetError = async (error) => {
+  console.log('resetError', error)
+  throw createError({
+    fatal: true,
+    message: 'Fatal error',
+  })
+}
 definePageMeta({
   layout: 'custom',
   // layout: false
@@ -41,7 +48,23 @@ definePageMeta({
       </div>
     </aside>
     <div class="prose p-12 bg-white-100 rounded-md w-[65ch]">
-      <NuxtPage />
+      <NuxtErrorBoundary>
+        <NuxtPage />
+        <template #error="{ error }">
+          <p class="course-error">
+            Oh no, something went wrong with the lesson
+          </p>
+          <code>{{ error }}</code>
+          <p>
+            <button
+              class="hover:cursor-pointer bg-gray-500 text-white font-bold"
+              @click="resetError(error)"
+            >
+              Reset
+            </button>
+          </p>
+        </template>
+      </NuxtErrorBoundary>
     </div>
   </div>
 </template>

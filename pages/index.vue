@@ -1,3 +1,6 @@
 <template>
-  <div>Index de pages</div>
+  <div>
+    <p>Index de pages</p>
+    <NuxtLink to="course">Courses</NuxtLink>
+  </div>
 </template>
